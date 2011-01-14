@@ -27,7 +27,7 @@ if ($lat && $lon ) {
 	print '<div data-role="header"><h1>Places near you</h1></div>';
 	print '<div data-role="content"><ul data-role="listview" data-theme="g">';
 	foreach($places as $id=>$p) {
-		print '<li><a href="#results" id="'.$id.'">' . $p . '</a><small class="counter">' . $counts[$id] .'</small></li>';
+		print '<li><a href="api.php?place='.$id.'" id="'.$id.'">' . $p . '</a><small class="counter">' . $counts[$id] .'</small></li>';
 	}
 	print "</ul></div></div>";
 	
@@ -68,7 +68,9 @@ if ($lat && $lon ) {
 		
 		
         if ( count($data->records ) > 0 ) {
-	    	print "<ul rel='".$place."' class=\"places edgetoedge\">";
+			print '<div data-role="page">';
+			print '<div data-role="header"><h1>Found Objects</h1></div>';
+			print '<div data-role="content"><ul data-role="listview" data-theme="g" rel="'.$place.'">';
 
 			for ($i=0; $i < count($data->records); $i++ )	{
 			    $ii = $i +1;
@@ -79,13 +81,15 @@ if ($lat && $lon ) {
     			$imurl = 'http://media.vam.ac.uk/media/thira/collection_images/' . $imdir . '/'  .$r->fields->primary_image_id . '_jpg_l.jpg';
     			$colurl = 'http://m.vam.ac.uk/collections/item/' . $r->fields->object_number;
                echo '<li class="forward">'; 
-				echo '<a class="slide" href="#img'.$ii.'">';
+				echo '<a data-rel="dialog" href="http://media.vam.ac.uk/media/thira/collection_images/' . $imdir . '/'  .$r->fields->primary_image_id . '_jpg_ds.jpg">';
 				echo '<img class="thumb" width="70" height="70" src="'.$thurl.'" alt="'. $r->fields->object.'" /><span>'    ;
     			echo $r->fields->object . '</span></a>';
     			print "</li>";
 		    }
-			print "</ul>";
+			print "</ul></div></div>";
 		} else{
-		    echo '<ul class="edgetoedge places"><li>Sorry, no images for this place. Please tap "Back" above.</li></ul>';
+		    echo '<div data-role="page">';
+			print '<div data-role="header"><h1>Sorry…</h1></div>';
+			print '<div data-role="content"><p>No images here.</p></div></div>';
 		}
 	}
