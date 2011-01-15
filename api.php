@@ -47,16 +47,18 @@ if ($lat && $lon ) {
 			$imdir = substr( $r->fields->primary_image_id , 0, 6);
 			$thurl = 'http://media.vam.ac.uk/media/thira/collection_images/' . $imdir . '/'  .$r->fields->primary_image_id . '_jpg_w.jpg';
 			$colurl = 'http://m.vam.ac.uk/collections/item/' . $r->fields->object_number;
-           echo '<div class="lg" id="img'.$ii.'">';
-		   echo '<div class="toolbar"><h1>' . $r->fields->object .'</h1><a class="back" href="#">Back</a></div>';
+           echo '<div data-role="page" id="img'.$ii.'">';
+		   echo '<div data-role="header"><h1>' . $r->fields->object .'</h1><a class="back" href="#">Back</a></div>';
+		echo '<div data-role="content">';
 			echo '<a class="swipeme" id="i'.$ii.'" href="#img'.$iii.'">';
 			echo '<img class="thumb" width="320" height="320" src="'.$thurl.'" alt="'. $r->fields->object.'" /></a>';
 			echo '<p class="info">' . $r->fields->title. ' ' . $r->fields->object .' (' . $r->fields->artist  .')</p>';
-			print "</div>";
+			print "</div></div>";
 	    }
 	} else{
-	    echo '<ul class="edgetoedge places"><li>Sorry, no images for this place. Please tap "Back" above.</li></ul>';
-	    
+	    echo '<div data-role="page">';
+		print '<div data-role="header"><h1>Sorry…</h1></div>';
+		print '<div data-role="content"><p>No images here.</p></div></div>';
 	}	
 
 } elseif ($place) {
@@ -65,7 +67,9 @@ if ($lat && $lon ) {
 
 		$json = file_get_contents($apiurl);
 		$data = json_decode($json);
-		
+		echo '<div data-role="page">';
+		print '<div data-role="header"><h1>Sorry…</h1></div>';
+		print '<div data-role="content"><p>No images here.</p></div></div>';		
 		
         if ( count($data->records ) > 0 ) {
 			print '<div data-role="page">';
@@ -81,12 +85,13 @@ if ($lat && $lon ) {
     			$imurl = 'http://media.vam.ac.uk/media/thira/collection_images/' . $imdir . '/'  .$r->fields->primary_image_id . '_jpg_l.jpg';
     			$colurl = 'http://m.vam.ac.uk/collections/item/' . $r->fields->object_number;
                echo '<li class="forward">'; 
-				echo '<a data-rel="dialog" href="http://media.vam.ac.uk/media/thira/collection_images/' . $imdir . '/'  .$r->fields->primary_image_id . '_jpg_ds.jpg">';
+				echo '<a href="#img'.$ii.'">';
 				echo '<img class="thumb" width="70" height="70" src="'.$thurl.'" alt="'. $r->fields->object.'" /><span>'    ;
     			echo $r->fields->object . '</span></a>';
     			print "</li>";
 		    }
 			print "</ul></div></div>";
+
 		} else{
 		    echo '<div data-role="page">';
 			print '<div data-role="header"><h1>Sorry…</h1></div>';
