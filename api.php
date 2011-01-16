@@ -6,7 +6,7 @@
 $lat = $_GET['lat'];
 $lon = $_GET['lon'];
 $place = $_GET['place'];
-$images =intval($_GET['images']);
+$images = $_GET['images'];
 
 if ($lat && $lon ) {
 
