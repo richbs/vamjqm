@@ -1,108 +1,108 @@
 <!DOCTYPE html>
 <html>
-	<head>
-		<title>
-			Where am I?
-		</title>
-		<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-		<link rel="stylesheet" href="http://code.jquery.com/mobile/1.0a2/jquery.mobile-1.0a2.min.css" />
-		<style type="text/css" media="screen">
-			a#result-link {
-				display:none;
-			}
-		</style>
-		<script src="http://code.jquery.com/jquery-1.4.4.min.js"></script>
-		<script src="http://code.jquery.com/mobile/1.0a2/jquery.mobile-1.0a2.min.js"></script>
-		<script src="http://j.maxmind.com/app/geoip.js" type="application/x-javascript" charset="utf-8"></script>
+<head>
+<title>Where am I?</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<link rel="stylesheet"
+	href="http://code.jquery.com/mobile/1.0a2/jquery.mobile-1.0a2.min.css" />
+<style type="text/css" media="screen">
+a#result-link {
+	display: none;
+}
+</style>
+<script src="http://code.jquery.com/jquery-1.4.4.min.js"></script>
+<script
+	src="http://code.jquery.com/mobile/1.0a2/jquery.mobile-1.0a2.min.js"></script>
+<script src="http://j.maxmind.com/app/geoip.js"
+	type="application/x-javascript" charset="utf-8"></script>
 <script type="text/javascript">
-
-	function getLargeImages()
-	{
+	function getLargeImages() {
 		$.ajax({
-			url: 'api.php',
-			data: 'images=1&place=' + escape( link.id ),
-			success: function(data){
-			    $('.lg').remove();
-			    $('body').append(data);
+			url : 'api.php',
+			data : 'images=1&place=' + escape(link.id),
+			success : function(data) {
+				$('.lg').remove();
+				$('body').append(data);
 			},
-			dataType: 'html'
+			dataType : 'html'
 		});
 
-		
-	    
 	}
 	// success callback, gets passed position object
 	function useCoords(position) // 'position' can be named anything
 	{
-	    $('#homeinfo').html('Got location - thanks!');
-		link_url = 'api.php?lat=' + position.coords.latitude  + '&lon=' + position.coords.longitude;
-	    $('#result-link').attr('href', link_url);
-		$('#result-link').css('display','block').fadeIn();
+		$('#homeinfo').html('Got location - thanks!');
+		link_url = 'api.php?lat=' + position.coords.latitude + '&lon='
+				+ position.coords.longitude;
+		$('#result-link').attr('href', link_url);
+		$('#result-link').css('display', 'block').fadeIn();
 	}
 
-	function lambeth()
-	{
-	    $('#homeinfo').html('Using IP Location');
-        lat = geoip_latitude()
-        lon = geoip_longitude()
-		
+	function lambeth() {
+		$('#homeinfo').html('Using IP Location');
+		lat = geoip_latitude()
+		lon = geoip_longitude()
+
 		$.ajax({
-			url: 'api.php',
-			data: 'lat='+lat+'&lon='+lon,
-			success: displayResults,
-    		dataType: 'html'
-    	});
+			url : 'api.php',
+			data : 'lat=' + lat + '&lon=' + lon,
+			success : displayResults,
+			dataType : 'html'
+		});
 	}
 
-	function nogeo() { 
-        lambeth();
+	function nogeo() {
+		lambeth();
 	}
 
 	/*
 	Get the co-ordinates on load
-	*/
-    $(function(){
-         var geo = "";
-         try {window.navgeo = !!(typeof navigator.geolocation != 'undefined');}catch(e){}
-         if (window.navgeo) {
-             geo = navigator.geolocation;
-            }
-         if (geo != "") {
-             geo.getCurrentPosition(useCoords, nogeo);
-         } else {
-             nogeo();
-         }
-    });
-
-	
-   </script>
-	</head>
-	<body>
-		<div id="home" data-role="page">
-			<div data-role="header">
-				<h1>V&amp;A There</h1>
-			</div>
-			<div data-role="content">
-			<p id="homeinfo" class="info">
-				Using your mobile device to locate you.
-			</p>
-			<p><a id="result-link" href="api.php" data-role="button">Choose a place near you</a>'</p>
-			</div>
-		</div>
-		<div id="results" data-role="page">
-			<div data-role="header">
-				<h1>V&amp;A Objects</h1>
-			    <a class="back" href="#">Back</a>
-			</div>
-			<div data-role="content">
-			<p id="resultsinfo" class="info">
-				Loading V&amp;A Objects<br />
-				<img src="jqtouch/themes/jqt/img/loading.gif" />
-			</p>
-			</div>
-			<ul class="rounded">
-				<li>No results</li>
-			</ul>
-		</div>
-	</body>
+	 */
+	$(function() {
+		var geo = "";
+		try {
+			window.navgeo = !!(typeof navigator.geolocation != 'undefined');
+		} catch (e) {
+		}
+		if (window.navgeo) {
+			geo = navigator.geolocation;
+		}
+		if (geo != "") {
+			geo.getCurrentPosition(useCoords, nogeo);
+		} else {
+			nogeo();
+		}
+		/*
+		$('.object-list').live('pagecreate',function(event){
+			var page = event.target;
+			var pieces = page.id.split('?');
+			var place_param = pieces[1];
+			$.ajax({
+				url : 'api.php',
+				data : 'images=1&' + place_param,
+				success : function(data) {
+					$('body').append(data);
+					console.log(data);
+				},
+				dataType : 'html'
+			});
+			
+		});
+		*/
+	});
+</script>
+</head>
+<body>
+<div id="home" data-role="page">
+<div data-role="header">
+<h1>V&amp;A There</h1>
+</div>
+<div data-role="content">
+<p id="homeinfo" class="info">Using your mobile device to locate
+you.</p>
+<p><a id="result-link" href="api.php" data-role="button">Choose
+a place near you</a></p>
+</div>
+</div>
+</body>
 </html>
