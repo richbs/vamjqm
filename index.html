@@ -34,31 +34,31 @@ a#result-link {
 		$('#homeinfo').html('Got location - thanks!');
 		link_url = 'api.php?lat=' + position.coords.latitude + '&lon='
 				+ position.coords.longitude;
+		$.mobile.pageLoading(true);	
+
 		$('#result-link').attr('href', link_url);
 		$('#result-link').css('display', 'block').fadeIn();
 	}
 
-	function lambeth() {
+	function nogeo() {
+		
 		$('#homeinfo').html('Using IP Location');
 		lat = geoip_latitude()
 		lon = geoip_longitude()
+		$.mobile.pageLoading(true);	
 
-		$.ajax({
-			url : 'api.php',
-			data : 'lat=' + lat + '&lon=' + lon,
-			success : displayResults,
-			dataType : 'html'
-		});
+		link_url = 'api.php?lat=' + lat + '&lon=' + lon;
+		$('#result-link').attr('href', link_url);
+		$('#result-link').css('display', 'block').fadeIn();
 	}
 
-	function nogeo() {
-		lambeth();
-	}
 
 	/*
 	Get the co-ordinates on load
 	 */
 	$(function() {
+		
+		$.mobile.pageLoading();	
 		var geo = "";
 		try {
 			window.navgeo = !!(typeof navigator.geolocation != 'undefined');
@@ -69,9 +69,13 @@ a#result-link {
 		}
 		if (geo != "") {
 			geo.getCurrentPosition(useCoords, nogeo);
+
 		} else {
 			nogeo();
+			$.mobile.pageLoading(true);	
+
 		}
+	
 		/*
 		$('.object-list').live('pagecreate',function(event){
 			var page = event.target;

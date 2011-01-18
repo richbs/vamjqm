@@ -52,12 +52,16 @@ if ($lat && $lon ) {
 
             $imdir = substr( $r->fields->primary_image_id , 0, 6);
             $thurl = 'http://media.vam.ac.uk/media/thira/collection_images/' . $imdir . '/'  .$r->fields->primary_image_id . '_jpg_w.jpg';
+            $lurl = 'http://media.vam.ac.uk/media/thira/collection_images/' . $imdir . '/'  .$r->fields->primary_image_id . '_jpg_l.jpg';
+            
             $colurl = 'http://m.vam.ac.uk/collections/item/' . $r->fields->object_number;
             echo '<div data-role="page" id="img'.$ii.'">';
             echo '<div data-role="header"><h1>' . $r->fields->object .'</h1></div>';
             echo '<div data-role="content">';
-            echo '<a class="swipeme" id="i'.$ii.'" href="#img'.$iii.'">';
-            echo '<img class="thumb" width="320" height="320" src="'.$thurl.'" alt="'. $r->fields->object.'" /></a>';
+            //echo '<a class="swipeme" id="i'.$ii.'" href="#img'.$iii.'">';
+            //echo '<a class="swipeme" id="i'.$ii.'" href="'.$lurl.'">';            
+            echo '<img src="'.$thurl.'" alt="'. $r->fields->object.'" />';
+            //echo '</a>';
             echo '<p class="info">' . $r->fields->title. ' ' . $r->fields->object .' (' . $r->fields->artist  .')</p>';
             print "</div></div>";
     } else{
